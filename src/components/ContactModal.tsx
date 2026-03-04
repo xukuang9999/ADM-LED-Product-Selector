@@ -66,7 +66,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, lan
             <div className="flex flex-col gap-1">
               <div className="text-[10px] font-bold uppercase tracking-wide text-text-muted">{t('contactEmailLabel')}</div>
               <div className="text-sm font-semibold text-text-main">
-                <a href="mailto:special.product@admtech.com.au" className="text-adm no-underline hover:underline">special.product@admtech.com.au</a>
+                <a href="mailto:illuminate@admtech.com.au" className="text-adm no-underline hover:underline">illuminate@admtech.com.au</a>
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, lan
           
           <div className="mt-5 flex justify-center">
             <a 
-              href={`mailto:special.product@admtech.com.au?subject=Special%20Product%20Enquiry&body=${emailBody}`}
+              href={`mailto:illuminate@admtech.com.au?subject=Special%20Product%20Enquiry&body=${emailBody}`}
               className="inline-flex items-center gap-2 bg-adm text-white px-7 py-2.5 rounded-lg text-[13px] font-bold no-underline transition-all duration-150 hover:bg-adm-dark hover:shadow-[0_4px_12px_rgba(61,46,143,0.3)]"
               dangerouslySetInnerHTML={{ __html: t('contactEmailCTA') }}
             />

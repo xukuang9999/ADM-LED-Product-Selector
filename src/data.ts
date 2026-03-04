@@ -53,6 +53,9 @@ export const translations: Record<string, Record<string, any>> = {
     orReachUs: 'OR REACH US DIRECTLY',
     contactEmailLabel: 'Email', contactPhoneLabel: 'Phone', contactAddressLabel: 'Address',
     contactEmailCTA: '&#9993; Email Our Special Product Team',
+    itemsSelectedForCompare: 'items selected for comparison',
+    selectItemsToCompare: 'Select items to compare',
+    resetCompare: 'Reset',
   },
   zh: {
     logoTitle: '<strong>LED</strong> 产品选择器',
@@ -102,6 +105,9 @@ export const translations: Record<string, Record<string, any>> = {
     orReachUs: '或直接联系我们',
     contactEmailLabel: '电子邮件', contactPhoneLabel: '电话', contactAddressLabel: '地址',
     contactEmailCTA: '&#9993; 发邮件给特殊产品团队',
+    itemsSelectedForCompare: '个产品已选择对比',
+    selectItemsToCompare: '选择产品进行对比',
+    resetCompare: '重置',
   },
   ja: {
     logoTitle: '<strong>LED</strong> 製品セレクター',
@@ -151,6 +157,9 @@ export const translations: Record<string, Record<string, any>> = {
     orReachUs: '直接お問い合わせ',
     contactEmailLabel: 'メール', contactPhoneLabel: '電話', contactAddressLabel: '住所',
     contactEmailCTA: '&#9993; 特殊製品チームへメールを送る',
+    itemsSelectedForCompare: '個の製品が比較用に選択されました',
+    selectItemsToCompare: '比較する製品を選択してください',
+    resetCompare: 'リセット',
   },
   hi: {
     logoTitle: '<strong>LED</strong> उत्पाद चयनकर्ता',
@@ -200,6 +209,9 @@ export const translations: Record<string, Record<string, any>> = {
     orReachUs: 'सीधे संपर्क करें',
     contactEmailLabel: 'ईमेल', contactPhoneLabel: 'फ़ोन', contactAddressLabel: 'पता',
     contactEmailCTA: '&#9993; विशेष उत्पाद टीम को ईमेल करें',
+    itemsSelectedForCompare: 'तुलना के लिए चुने गए आइटम',
+    selectItemsToCompare: 'तुलना करने के लिए आइटम चुनें',
+    resetCompare: 'रीसेट',
   },
   vi: {
     logoTitle: '<strong>LED</strong> Bộ Chọn Sản Phẩm',
@@ -249,5 +261,8 @@ export const translations: Record<string, Record<string, any>> = {
     orReachUs: 'HOẶC LIÊN HỆ TRỰC TIẾP',
     contactEmailLabel: 'Email', contactPhoneLabel: 'Điện thoại', contactAddressLabel: 'Địa chỉ',
     contactEmailCTA: '&#9993; Gửi email cho Đội sản phẩm đặc biệt',
+    itemsSelectedForCompare: 'sản phẩm đã chọn để so sánh',
+    selectItemsToCompare: 'Chọn sản phẩm để so sánh',
+    resetCompare: 'Đặt lại',
   }
 };

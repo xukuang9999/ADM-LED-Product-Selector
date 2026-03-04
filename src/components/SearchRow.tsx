@@ -42,9 +42,6 @@ export const SearchRow: React.FC<SearchRowProps> = ({
             onChange={(e) => setSearchQuery(e.target.value)}
             aria-label={t('searchPlaceholder')}
           />
-          <span className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-gradient-to-br from-adm to-compare text-white px-2 py-0.5 rounded-full text-[9px] font-extrabold tracking-wide">
-            AI
-          </span>
         </div>
         
         <div className="text-xs text-text-muted whitespace-nowrap hidden sm:block">

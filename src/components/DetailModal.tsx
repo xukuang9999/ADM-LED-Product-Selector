@@ -28,7 +28,8 @@ export const DetailModal: React.FC<DetailModalProps> = ({
     'SMD Strip': 'bg-[#dbeafe] text-[#1e40af]',
     'COB Strip': 'bg-[#ede9fe] text-[#5b21b6]',
     'Neon Flex Strip': 'bg-[#fef3c7] text-[#92400e]',
-    'LED Module': 'bg-[#d1fae5] text-[#065f46]'
+    'LED Backlit Module': 'bg-[#d1fae5] text-[#065f46]',
+    'LED Edge Lit Module': 'bg-[#d1fae5] text-[#065f46]'
   }[product.category] || 'bg-[#d1fae5] text-[#065f46]';
 
   const ok = product.stock > 0;

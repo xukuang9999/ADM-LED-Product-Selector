@@ -30,13 +30,13 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
       
       const newFilters = { ...prev, [key]: updated };
       
-      // Auto-select LED Module category when any module type is chosen
-      if (key === 'moduleType' && newFilters.moduleType.length > 0 && !newFilters.category.includes('LED Module')) {
-        newFilters.category = [...newFilters.category, 'LED Module'];
+      // Auto-select LED Module categories when any module type is chosen
+      if (key === 'moduleType' && newFilters.moduleType.length > 0 && !newFilters.category.some(c => c.includes('Module'))) {
+        newFilters.category = [...newFilters.category, 'LED Backlit Module', 'LED Edge Lit Module'];
       }
       
       // Clear module type chips when LED Module deselected
-      if (key === 'category' && !newFilters.category.includes('LED Module') && newFilters.moduleType.length > 0) {
+      if (key === 'category' && !newFilters.category.some(c => c.includes('Module')) && newFilters.moduleType.length > 0) {
         newFilters.moduleType = [];
       }
       
@@ -69,8 +69,8 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
     );
   };
 
-  const onlyModule = filters.category.length > 0 && filters.category.every(c => c === 'LED Module');
-  const noModule = filters.category.length > 0 && !filters.category.includes('LED Module');
+  const onlyModule = filters.category.length > 0 && filters.category.every(c => c.includes('Module'));
+  const noModule = filters.category.length > 0 && !filters.category.some(c => c.includes('Module'));
 
   return (
     <section aria-label="Filters" className={`bg-white border-b border-border-main overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${isOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>

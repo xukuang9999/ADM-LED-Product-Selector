@@ -24,37 +24,32 @@ export const Header: React.FC<HeaderProps> = ({ lang, setLang, compareCount, onO
           </h1>
         </div>
 
-        <nav className="flex gap-1 items-center flex-wrap mx-2" aria-label="Language selection">
-          {(['en', 'zh', 'ja', 'hi', 'vi'] as Language[]).map((l) => (
-            <button
-              key={l}
-              className={`border-[1.5px] font-inherit text-[11px] font-semibold cursor-pointer px-2 py-[3px] rounded-[5px] transition-all duration-150 whitespace-nowrap leading-relaxed hover:border-adm hover:text-adm hover:bg-adm-light ${
-                lang === l 
-                  ? 'bg-adm text-white border-adm hover:text-white hover:bg-adm' 
-                  : 'bg-transparent text-text-muted border-transparent'
-              }`}
-              onClick={() => setLang(l)}
-            >
-              {l === 'en' ? 'EN' : l === 'zh' ? '中文' : l === 'ja' ? '日本語' : l === 'hi' ? 'हिन्दी' : 'Việt'}
-            </button>
-          ))}
-        </nav>
-
         <div className="flex gap-2.5 items-center">
           <button 
             className="hidden lg:flex items-center gap-2 bg-white border-2 border-adm text-adm px-4 py-2 rounded-md cursor-pointer text-xs font-semibold transition-all duration-150 whitespace-nowrap hover:bg-adm-light hover:shadow-[0_3px_10px_rgba(61,46,143,0.15)]"
             onClick={onOpenContact}
             dangerouslySetInnerHTML={{ __html: t('contactBtn') }}
           />
-          <button 
-            className="flex items-center gap-2 bg-adm border-none text-white px-4 py-2 rounded-md cursor-pointer text-xs font-semibold transition-all duration-150 whitespace-nowrap hover:bg-adm-dark hover:shadow-[0_3px_10px_rgba(61,46,143,0.3)]"
-            onClick={onOpenCompare}
-          >
-            <span dangerouslySetInnerHTML={{ __html: t('compareBtn') }} />
-            <span className="bg-white text-adm rounded px-[7px] py-[1px] text-[11px] font-extrabold min-w-[20px] text-center">
-              {compareCount}
-            </span>
-          </button>
+          <nav className="flex items-center" aria-label="Language selection">
+            <div className="relative">
+              <select
+                value={lang}
+                onChange={(e) => setLang(e.target.value as Language)}
+                className="appearance-none bg-white border-2 border-adm text-adm text-xs font-semibold rounded-md pl-3 pr-8 py-1.5 cursor-pointer outline-none focus:ring-2 focus:ring-adm/20 hover:bg-adm-light transition-colors"
+              >
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+                <option value="ja">日本語</option>
+                <option value="hi">हिन्दी</option>
+                <option value="vi">Tiếng Việt</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-adm">
+                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </nav>
         </div>
       </div>
     </header>

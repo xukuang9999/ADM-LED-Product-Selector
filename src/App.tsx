@@ -9,6 +9,7 @@ import { ProductCard } from './components/ProductCard';
 import { CompareModal } from './components/CompareModal';
 import { ContactModal } from './components/ContactModal';
 import { DetailModal } from './components/DetailModal';
+import { CompareBar } from './components/CompareBar';
 
 const wpmRanges = [
   { label: '≤2 W/m', min: 0, max: 2 },
@@ -18,7 +19,7 @@ const wpmRanges = [
   { label: '17–20 W/m', min: 17, max: 20 },
 ];
 
-const catOrder = ['SMD Strip', 'COB Strip', 'Neon Flex Strip', 'LED Module'];
+const catOrder = ['SMD Strip', 'COB Strip', 'Neon Flex Strip', 'LED Backlit Module', 'LED Edge Lit Module'];
 
 export default function App() {
   const [lang, setLang] = useState<Language>('en');
@@ -56,9 +57,9 @@ export default function App() {
       voltage: getUnique('voltage'),
       cct: getUnique('cct'),
       ipRating: getUnique('ipRating'),
-      ledWidth: [...new Set(products.filter(p => p.category !== 'LED Module').map(p => p.ledWidth).filter(Boolean))].sort((a, b) => parseFloat(a) - parseFloat(b)),
+      ledWidth: [...new Set(products.filter(p => !p.category.includes('Module')).map(p => p.ledWidth).filter(Boolean))].sort((a, b) => parseFloat(a) - parseFloat(b)),
       wpm: wpmRanges.map(r => r.label),
-      moduleType: [...new Set(products.filter(p => p.category === 'LED Module').map(p => p.moduleType).filter(Boolean))].sort(),
+      moduleType: [...new Set(products.filter(p => p.category.includes('Module')).map(p => p.moduleType).filter(Boolean))].sort(),
       cri: getUnique('cri')
     };
   }, []);
@@ -100,8 +101,8 @@ export default function App() {
       if (filters.voltage.length && !filters.voltage.includes(p.voltage)) return false;
       if (filters.cct.length && !filters.cct.some(v => p.cct && (p.cct === v || p.cct.includes(v.replace('K', ''))))) return false;
       if (filters.ipRating.length && !filters.ipRating.includes(p.ipRating)) return false;
-      if (filters.ledWidth.length && p.category !== 'LED Module' && !filters.ledWidth.includes(p.ledWidth)) return false;
-      if (filters.moduleType.length && p.category === 'LED Module' && !filters.moduleType.includes(p.moduleType)) return false;
+      if (filters.ledWidth.length && !p.category.includes('Module') && !filters.ledWidth.includes(p.ledWidth)) return false;
+      if (filters.moduleType.length && p.category.includes('Module') && !filters.moduleType.includes(p.moduleType)) return false;
       if (filters.cri.length && !filters.cri.some(sel => {
         const m = String(p.cri).match(/\d+/);
         const s = String(sel).match(/\d+/);
@@ -213,7 +214,15 @@ export default function App() {
         availableOptions={availableOptions}
       />
 
-      <main className="max-w-[1480px] mx-auto px-4 sm:px-7 py-5 pb-12 w-full flex-1">
+      <main className="max-w-[1480px] mx-auto px-4 sm:px-7 py-5 pb-24 w-full flex-1">
+        {compareList.length > 0 && (
+          <CompareBar
+            lang={lang}
+            compareCount={compareList.length}
+            onOpenCompare={openCompare}
+            onResetCompare={() => setCompareList([])}
+          />
+        )}
         {sortedProducts.length === 0 ? (
           <div className="text-center py-16 px-5 text-text-muted">
             <h2 className="text-[15px] text-text-sec mb-1.5 font-semibold">{t('noResults')}</h2>
