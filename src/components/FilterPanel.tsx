@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { Filters, Language } from '../types';
 import { translations } from '../data';
 
@@ -27,42 +28,43 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
       const updated = current.includes(value)
         ? current.filter(v => v !== value)
         : [...current, value];
-      
+
       const newFilters = { ...prev, [key]: updated };
-      
+
       // Auto-select LED Module categories when any module type is chosen
       if (key === 'moduleType' && newFilters.moduleType.length > 0 && !newFilters.category.some(c => c.includes('Module'))) {
         newFilters.category = [...newFilters.category, 'LED Backlit Module', 'LED Edge Lit Module'];
       }
-      
+
       // Clear module type chips when LED Module deselected
       if (key === 'category' && !newFilters.category.some(c => c.includes('Module')) && newFilters.moduleType.length > 0) {
         newFilters.moduleType = [];
       }
-      
+
       return newFilters;
     });
   };
 
-  const renderChips = (key: keyof Filters, options: string[], isCat = false) => {
+  const renderChips = (key: keyof Filters, options: string[]) => {
     return (
-      <div className="flex flex-wrap gap-1 flex-1" role="group" aria-label={`Filter by ${key}`}>
+      <div className="flex flex-wrap gap-1 flex-1" role="group" aria-label={`Filter by ${String(key)}`}>
         {options.map(opt => {
           const isOn = filters[key].includes(opt);
           return (
-            <button
+            <motion.button
+              layout
               key={opt}
               type="button"
               aria-pressed={isOn}
-              className={`px-3 py-1 border-[1.5px] rounded-full text-xs cursor-pointer transition-all duration-150 select-none whitespace-nowrap leading-relaxed hover:border-adm hover:text-adm hover:bg-adm-light ${
-                isOn 
-                  ? 'bg-adm text-white border-adm font-semibold' 
+              whileTap={{ scale: 0.95 }}
+              className={`px-3 py-1 border-[1.5px] rounded-full text-xs cursor-pointer transition-all duration-150 select-none whitespace-nowrap leading-relaxed hover:border-adm hover:text-adm hover:bg-adm-light ${isOn
+                  ? 'bg-adm text-white border-adm font-bold shadow-sm'
                   : 'bg-white text-text-sec border-border-main font-medium'
-              }`}
+                }`}
               onClick={() => toggleFilter(key, opt)}
             >
               {opt}
-            </button>
+            </motion.button>
           );
         })}
       </div>
@@ -76,13 +78,13 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
     <section aria-label="Filters" className={`bg-white border-b border-border-main overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${isOpen ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
       <div className="max-w-[1480px] mx-auto px-4 sm:px-7 pt-1.5 pb-2.5">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1px_1fr] gap-0 md:gap-x-8">
-          
+
           <div className="flex flex-col">
             <div className="flex items-start gap-0 py-1.5 border-b border-border-lt">
               <span className="text-[10px] font-extrabold uppercase tracking-wide text-adm whitespace-nowrap min-w-[88px] sm:min-w-[110px] pt-1.5 shrink-0">
                 {t('catLabel')}
               </span>
-              {renderChips('category', availableOptions.category, true)}
+              {renderChips('category', availableOptions.category)}
             </div>
             <div className="flex items-start gap-0 py-1.5 border-b border-border-lt">
               <span className="text-[10px] font-bold uppercase tracking-wide text-text-muted whitespace-nowrap min-w-[88px] sm:min-w-[110px] pt-1.5 shrink-0">

@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = ({ lang, setLang, compareCount, onO
   const t = (key: string) => translations[lang]?.[key] || translations['en'][key];
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b-2 border-adm shadow-sm">
+    <header className="bg-white border-b-2 border-adm shadow-sm">
       <div className="max-w-[1480px] mx-auto px-4 sm:px-7 h-[92px] flex items-center justify-between gap-5">
         <div className="flex items-center gap-4">
           <Logo className="w-24 h-12" />
@@ -25,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({ lang, setLang, compareCount, onO
         </div>
 
         <div className="flex gap-2.5 items-center">
-          <button 
+          <button
             className="hidden lg:flex items-center gap-2 bg-white border-2 border-adm text-adm px-4 py-2 rounded-md cursor-pointer text-xs font-semibold transition-all duration-150 whitespace-nowrap hover:bg-adm-light hover:shadow-[0_3px_10px_rgba(61,46,143,0.15)]"
             onClick={onOpenContact}
             dangerouslySetInnerHTML={{ __html: t('contactBtn') }}

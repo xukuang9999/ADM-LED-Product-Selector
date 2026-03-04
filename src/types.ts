@@ -20,6 +20,7 @@ export interface Product {
   ledWidth: string;
   moduleType: string;
   datasheet: string;
+  image?: string;
 }
 
 export type Language = 'en' | 'zh' | 'ja' | 'hi' | 'vi';

@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { products, translations } from './data';
+import { products, translations, searchSynonyms } from './data';
 import { Product, Language, Filters } from './types';
 import { Header } from './components/Header';
 import { SearchRow } from './components/SearchRow';
@@ -68,18 +68,10 @@ export default function App() {
     if (!searchQuery) return true;
     const terms = searchQuery.toLowerCase().trim().split(/\s+/);
     const hay = [p.name, p.sku, p.description, p.category, p.voltage, p.cct, p.ipRating, p.wattage, p.wattPerM, p.lumens, p.ledType, p.cri, p.beamAngle, p.dimensions, p.ledWidth].join(' ').toLowerCase();
-    
-    const syn: Record<string, string[]> = {
-      outdoor: ['ip65', 'ip66', 'ip67', 'ip68'], indoor: ['ip20', 'ip54'], waterproof: ['ip65', 'ip66', 'ip67', 'ip68'],
-      warm: ['3000k', '2700k'], cool: ['6500k', '7000k'], pure: ['6500k'], natural: ['4000k'], daylight: ['6500k'],
-      color: ['rgb', 'rgbw', 'rgbtw', 'cct'], colour: ['rgb', 'rgbw', 'rgbtw', 'cct'],
-      rgb: ['rgb', 'rgbw', 'rgbtw'], tunable: ['cct', 'tunable'], dotfree: ['cob'], 'dot-free': ['cob'],
-      signage: ['module'], channel: ['module'], letter: ['module']
-    };
 
     return terms.every(t => {
       if (hay.includes(t)) return true;
-      const s = syn[t];
+      const s = searchSynonyms[t];
       return s && s.some(x => hay.includes(x));
     });
   };
@@ -116,7 +108,7 @@ export default function App() {
   const sortedProducts = useMemo(() => {
     const pwrVal = (p: Product) => parseFloat(p.wattPerM) || parseFloat((p.wattage || '').replace(/[^\d.]/g, '')) || 0;
     const cctVal = (p: Product) => { const m = String(p.cct || '').match(/\d+/); return m ? parseInt(m[0]) : 99999; };
-    
+
     return [...filteredProducts].sort((a, b) => {
       if (sort === 'stock') return b.stock - a.stock;
       if (sort === 'nameDesc') return b.name.localeCompare(a.name);
@@ -173,7 +165,7 @@ export default function App() {
   }, [isCompareOpen, isContactOpen, detailProductId]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-bg-main font-sans">
       <Helmet>
         <title>LED Lighting Products Catalog | ADM Power Supplies</title>
         <meta name="description" content="Browse our extensive catalog of LED lighting products including SMD Strips, COB Strips, Neon Flex Strips, and LED Modules. Find the perfect lighting solution for your needs." />
@@ -185,34 +177,39 @@ export default function App() {
         <meta name="twitter:title" content="LED Lighting Products Catalog | ADM Power Supplies" />
         <meta name="twitter:description" content="Browse our extensive catalog of LED lighting products including SMD Strips, COB Strips, Neon Flex Strips, and LED Modules." />
       </Helmet>
-      <Header 
-        lang={lang} 
-        setLang={setLang} 
-        compareCount={compareList.length} 
-        onOpenContact={() => setIsContactOpen(true)}
-        onOpenCompare={openCompare}
-      />
-      
-      <SearchRow 
-        lang={lang}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        sort={sort}
-        setSort={setSort}
-        totalCount={products.length}
-        filteredCount={sortedProducts.length}
-        isFilterOpen={isFilterOpen}
-        toggleFilter={() => setIsFilterOpen(!isFilterOpen)}
-      />
-      
-      <FilterPanel 
-        lang={lang}
-        filters={filters}
-        setFilters={setFilters}
-        isOpen={isFilterOpen}
-        clearAll={clearAllFilters}
-        availableOptions={availableOptions}
-      />
+
+      <div className="sticky top-0 z-40 flex flex-col">
+        <Header
+          lang={lang}
+          setLang={setLang}
+          compareCount={compareList.length}
+          onOpenContact={() => setIsContactOpen(true)}
+          onOpenCompare={openCompare}
+        />
+
+        <SearchRow
+          lang={lang}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          sort={sort}
+          setSort={setSort}
+          totalCount={products.length}
+          filteredCount={sortedProducts.length}
+          isFilterOpen={isFilterOpen}
+          toggleFilter={() => setIsFilterOpen(!isFilterOpen)}
+        />
+      </div>
+
+      <div className={`transition-all duration-300 ease-in-out ${isFilterOpen ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+        <FilterPanel
+          lang={lang}
+          filters={filters}
+          setFilters={setFilters}
+          isOpen={isFilterOpen}
+          clearAll={clearAllFilters}
+          availableOptions={availableOptions}
+        />
+      </div>
 
       <main className="max-w-[1480px] mx-auto px-4 sm:px-7 py-5 pb-24 w-full flex-1">
         {compareList.length > 0 && (
@@ -224,14 +221,21 @@ export default function App() {
           />
         )}
         {sortedProducts.length === 0 ? (
-          <div className="text-center py-16 px-5 text-text-muted">
-            <h2 className="text-[15px] text-text-sec mb-1.5 font-semibold">{t('noResults')}</h2>
-            <p>{t('noResultsSub')}</p>
+          <div className="text-center py-24 px-5 bg-white rounded-xl border border-border-main shadow-sm">
+            <div className="text-4xl mb-4">🔍</div>
+            <h2 className="text-lg text-text-main mb-2 font-bold">{t('noResults')}</h2>
+            <p className="text-text-muted mb-6 max-w-md mx-auto">{t('noResultsSub')}</p>
+            <button
+              onClick={clearAllFilters}
+              className="px-6 py-2.5 bg-adm text-white rounded-lg font-semibold hover:bg-adm-dark transition-all duration-150 shadow-sm active:scale-95"
+            >
+              {t('clearAll').replace(/&#10005;\s*/, '')}
+            </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3.5">
             {sortedProducts.map(p => (
-              <ProductCard 
+              <ProductCard
                 key={p.id}
                 product={p}
                 lang={lang}
@@ -244,7 +248,7 @@ export default function App() {
         )}
       </main>
 
-      <CompareModal 
+      <CompareModal
         isOpen={isCompareOpen}
         onClose={() => setIsCompareOpen(false)}
         products={products.filter(p => compareList.includes(p.id))}
@@ -252,13 +256,13 @@ export default function App() {
         toggleCompare={toggleCompare}
       />
 
-      <ContactModal 
+      <ContactModal
         isOpen={isContactOpen}
         onClose={() => setIsContactOpen(false)}
         lang={lang}
       />
 
-      <DetailModal 
+      <DetailModal
         isOpen={detailProductId !== null}
         onClose={() => setDetailProductId(null)}
         product={products.find(p => p.id === detailProductId) || null}

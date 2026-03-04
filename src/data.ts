@@ -266,3 +266,11 @@ export const translations: Record<string, Record<string, any>> = {
     resetCompare: 'Đặt lại',
   }
 };
+
+export const searchSynonyms: Record<string, string[]> = {
+  outdoor: ['ip65', 'ip66', 'ip67', 'ip68'], indoor: ['ip20', 'ip54'], waterproof: ['ip65', 'ip66', 'ip67', 'ip68'],
+  warm: ['3000k', '2700k'], cool: ['6500k', '7000k'], pure: ['6500k'], natural: ['4000k'], daylight: ['6500k'],
+  color: ['rgb', 'rgbw', 'rgbtw', 'cct'], colour: ['rgb', 'rgbw', 'rgbtw', 'cct'],
+  rgb: ['rgb', 'rgbw', 'rgbtw'], tunable: ['cct', 'tunable'], dotfree: ['cob'], 'dot-free': ['cob'],
+  signage: ['module'], channel: ['module'], letter: ['module']
+};

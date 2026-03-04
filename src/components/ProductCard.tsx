@@ -1,6 +1,8 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { Product, Language } from '../types';
 import { translations } from '../data';
+import { Logo } from './Logo';
 
 interface ProductCardProps {
   product: Product;
@@ -20,7 +22,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const t = (key: string) => translations[lang]?.[key] || translations['en'][key];
 
   const trimBrand = (s: string) => (s || '').replace(/^(ADM|LBY)\s+/i, '');
-  
+
   const partDesc = (p: Product) => {
     const cleaned = trimBrand(p.name);
     const baseSku = p.sku.replace(/\s*\(.*?\)\s*$/, '').trim();
@@ -39,10 +41,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const inStock = product.stock > 0;
 
   return (
-    <article 
-      className={`bg-white rounded-[10px] border-[1.5px] p-4 flex flex-col transition-all duration-200 cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(0,0,0,0.08)] ${
-        isCompared ? 'border-compare shadow-[0_0_0_2px_var(--color-compare)]' : 'border-border-lt hover:border-border-main'
-      }`}
+    <motion.article
+      layout
+      initial={{ opacity: 0, scale: 0.98 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      whileHover={{ y: -4, shadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)" }}
+      className={`group bg-white rounded-[10px] border-[1.5px] p-4 flex flex-col cursor-pointer transition-colors duration-200 ${isCompared ? 'border-compare ring-2 ring-compare/20 shadow-md' : 'border-border-lt hover:border-border-main shadow-sm'
+        }`}
       onClick={onClick}
       tabIndex={0}
       role="button"
@@ -58,11 +64,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {product.category}
         </span>
         <button
-          className={`w-[26px] h-[26px] rounded-md border-[1.5px] cursor-pointer grid place-items-center text-[13px] transition-all duration-150 shrink-0 ${
-            isCompared 
-              ? 'bg-compare text-white border-compare' 
-              : 'bg-white border-border-main text-text-muted hover:border-compare hover:text-compare hover:bg-compare-lt'
-          }`}
+          className={`w-[26px] h-[26px] rounded-md border-[1.5px] cursor-pointer grid place-items-center text-[13px] transition-all duration-150 shrink-0 ${isCompared
+            ? 'bg-compare text-white border-compare'
+            : 'bg-white border-border-main text-text-muted hover:border-compare hover:text-compare hover:bg-compare-lt'
+            }`}
           onClick={(e) => {
             e.stopPropagation();
             toggleCompare(product.id);
@@ -72,6 +77,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {isCompared ? '✓' : '+'}
         </button>
       </div>
+
 
       <h2 className="text-xs font-bold leading-tight text-text-main mb-0.5 font-mono tracking-wide m-0">
         {product.sku}
@@ -130,6 +136,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           )}
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 };
