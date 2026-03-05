@@ -70,8 +70,8 @@ export const SearchRow: React.FC<SearchRowProps> = ({
 
             <button
               className={`h-11 px-6 border rounded-xl text-[12px] font-extrabold cursor-pointer inline-flex items-center gap-2.5 transition-all duration-200 whitespace-nowrap uppercase tracking-wider ${isFilterOpen
-                ? 'bg-adm text-white border-adm shadow-lg shadow-adm/30'
-                : 'bg-white text-adm border-adm hover:bg-adm hover:text-white hover:shadow-md'
+                ? 'bg-[#f1f5f9] text-text-muted border-border-main hover:bg-[#e2e8f0] hover:text-text-sec'
+                : 'bg-adm text-white border-adm shadow-lg shadow-adm/30 active:scale-95'
                 }`}
               onClick={toggleFilter}
             >
