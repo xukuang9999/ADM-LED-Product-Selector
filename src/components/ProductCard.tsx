@@ -59,25 +59,41 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         }
       }}
     >
-      <div className="flex items-start justify-between gap-2 mb-2.5">
-        <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-[3px] rounded leading-relaxed whitespace-nowrap ${pillClass}`}>
-          {product.category}
-        </span>
-        <button
-          className={`w-[26px] h-[26px] rounded-md border-[1.5px] cursor-pointer grid place-items-center text-[13px] transition-all duration-150 shrink-0 ${isCompared
-            ? 'bg-compare text-white border-compare'
-            : 'bg-white border-border-main text-text-muted hover:border-compare hover:text-compare hover:bg-compare-lt'
-            }`}
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleCompare(product.id);
-          }}
-          title={isCompared ? t('removeCmp') : t('addCmp')}
-        >
-          {isCompared ? '✓' : '+'}
-        </button>
+      <div className="relative aspect-[4/3] rounded-lg mb-3 flex items-center justify-center bg-bg-main overflow-hidden border border-border-lt">
+        {product.image ? (
+          <img
+            src={product.image}
+            alt={product.sku}
+            loading="lazy"
+            className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="flex flex-col items-center gap-2 text-adm/20">
+            <Logo className="w-16 grayscale opacity-20" />
+            <span className="text-[10px] font-bold uppercase tracking-widest">{product.sku.split('-')[1] || product.sku.split('-')[0]}</span>
+          </div>
+        )}
+        <div className="absolute top-2 left-2 flex flex-col gap-1">
+          <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded shadow-sm ${pillClass}`}>
+            {product.category}
+          </span>
+        </div>
+        <div className="absolute top-2 right-2">
+          <button
+            className={`w-[26px] h-[26px] rounded-md border-[1.5px] cursor-pointer grid place-items-center text-[13px] transition-all duration-150 shrink-0 ${isCompared
+              ? 'bg-compare text-white border-compare'
+              : 'bg-white/80 backdrop-blur-sm border-border-main text-text-muted hover:border-compare hover:text-compare hover:bg-white shadow-sm'
+              }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleCompare(product.id);
+            }}
+            title={isCompared ? t('removeCmp') : t('addCmp')}
+          >
+            {isCompared ? '✓' : '+'}
+          </button>
+        </div>
       </div>
-
 
       <h2 className="text-xs font-bold leading-tight text-text-main mb-0.5 font-mono tracking-wide m-0">
         {product.sku}
