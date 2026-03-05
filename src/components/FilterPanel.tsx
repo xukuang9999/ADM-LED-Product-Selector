@@ -140,9 +140,9 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
           </div>
 
         </div>
-        <div className="flex items-center py-1.5 pt-2 gap-0">
+        <div className="flex items-center justify-end py-1.5 pt-2 gap-0">
           <button
-            className="bg-transparent border-none font-inherit text-[11px] font-semibold text-text-muted cursor-pointer py-1 flex items-center gap-1 transition-colors duration-150 whitespace-nowrap hover:text-danger"
+            className="bg-transparent border-none font-inherit text-[11px] font-semibold text-text-muted cursor-pointer py-1 flex items-center gap-1 transition-colors duration-150 whitespace-nowrap hover:text-danger hover:underline uppercase tracking-wider"
             onClick={clearAll}
             dangerouslySetInnerHTML={{ __html: t('clearAll') }}
           />
