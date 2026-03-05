@@ -11,7 +11,7 @@ export const translations: Record<string, Record<string, any>> = {
     compareBtn: '&#9878;&ensp;Compare&ensp;',
     catLabel: 'Category', colourTempLabel: 'Colour Temp', ledWidthLabel: 'LED Width',
     moduleTypeLabel: 'Module Type', voltageLabel: 'Voltage', ipRatingLabel: 'IP Rating',
-    powerLabel: 'Power (W/m)', criLabel: 'CRI', clearAll: '&#10005; Clear all filters',
+    powerLabel: 'Power', criLabel: 'CRI', clearAll: '&#10005; Clear all filters',
     sortAZ: 'A — Z', sortZA: 'Z — A', sortAvailability: 'Availability', sortPower: 'Power Rating', sortColour: 'Colour',
     searchPlaceholder: 'Search by spec or keyword — e.g. "24V warm white IP67" or "outdoor COB 3000K"',
     noResults: 'No matching products', noResultsSub: 'Try broadening your search or adjusting filters',
