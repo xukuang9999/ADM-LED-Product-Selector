@@ -12,7 +12,7 @@ import { DetailModal } from './components/DetailModal';
 import { CompareBar } from './components/CompareBar';
 
 const wpmRanges = [
-  { label: '≤2 W/m', min: 0, max: 2 },
+  { label: '≤4 W/m', min: 0, max: 4 },
   { label: '4–8 W/m', min: 4, max: 8 },
   { label: '9–12 W/m', min: 9, max: 12 },
   { label: '13–16 W/m', min: 13, max: 16 },
@@ -78,9 +78,15 @@ export default function App() {
 
   const matchWpm = (p: Product) => {
     if (!filters.wpm.length) return true;
-    if (!p.wattPerM) return false;
-    const v = parseFloat(p.wattPerM);
+
     return filters.wpm.some(lbl => {
+      // Rule: "≤4 W/m" filter applies to all LED modules
+      if (lbl === '≤4 W/m' && p.category.includes('Module')) {
+        return true;
+      }
+
+      if (!p.wattPerM) return false;
+      const v = parseFloat(p.wattPerM);
       const r = wpmRanges.find(x => x.label === lbl);
       return r && v >= r.min && v <= r.max;
     });
