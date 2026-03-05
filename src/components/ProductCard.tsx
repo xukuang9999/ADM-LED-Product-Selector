@@ -111,6 +111,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span className="text-[11px] font-bold">{product.wattPerM}</span>
           </div>
         )}
+        {product.cri && (
+          <div className="flex items-center bg-purple-50 text-purple-700 px-2 py-1 rounded-md border border-purple-100/50">
+            <span className="text-[10px] font-bold uppercase mr-1 opacity-50">CRI</span>
+            <span className="text-[11px] font-bold">{product.cri.replace('CRI', '')}</span>
+          </div>
+        )}
       </div>
 
       <div className="flex items-center justify-between pt-4 border-t border-border-lt">
