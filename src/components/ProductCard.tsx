@@ -125,11 +125,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               href={product.datasheet}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-lg border border-border-main flex items-center justify-center text-text-sec hover:bg-[#f8f9fc] hover:border-text-main transition-all group/btn"
+              className="w-8 h-8 rounded-lg border border-border-main flex items-center justify-center text-text-sec hover:bg-[#f8f9fc] hover:border-text-main transition-all group/btn"
               onClick={(e) => e.stopPropagation()}
               title={t('datasheet')}
             >
-              <svg className="w-4 h-4 group-hover/btn:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-3.5 h-3.5 group-hover/btn:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
             </a>
@@ -139,10 +139,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               href={product.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 h-9 bg-adm text-white rounded-lg flex items-center gap-2 text-[11px] font-black uppercase tracking-widest hover:bg-adm-dark hover:shadow-lg hover:shadow-adm/20 transition-all active:scale-95"
+              className="px-3 h-8 bg-adm text-white rounded-lg flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest hover:bg-adm-dark hover:shadow-lg hover:shadow-adm/20 transition-all active:scale-95"
               onClick={(e) => e.stopPropagation()}
             >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
               {t('buyNow')}
