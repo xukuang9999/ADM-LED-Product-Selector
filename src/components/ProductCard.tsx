@@ -139,7 +139,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               href={product.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 h-8 bg-adm text-white rounded-lg flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest hover:bg-adm-dark hover:shadow-lg hover:shadow-adm/20 transition-all active:scale-95"
+              className="px-2.5 h-8 bg-adm text-white rounded-lg flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest hover:bg-adm-dark hover:shadow-lg hover:shadow-adm/20 transition-all active:scale-95"
               onClick={(e) => e.stopPropagation()}
             >
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
