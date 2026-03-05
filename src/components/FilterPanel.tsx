@@ -47,7 +47,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
 
   const renderChips = (key: keyof Filters, options: string[]) => {
     return (
-      <div className="flex flex-wrap gap-1 flex-1" role="group" aria-label={`Filter by ${String(key)}`}>
+      <div className="flex flex-wrap gap-1.5 flex-1" role="group" aria-label={`Filter by ${String(key)}`}>
         {options.map(opt => {
           const isOn = filters[key].includes(opt);
           return (
@@ -56,10 +56,10 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
               key={opt}
               type="button"
               aria-pressed={isOn}
-              whileTap={{ scale: 0.95 }}
-              className={`px-3 py-1 border-[1.5px] rounded-full text-xs cursor-pointer transition-all duration-150 select-none whitespace-nowrap leading-relaxed hover:border-adm hover:text-adm hover:bg-adm-light ${isOn
-                  ? 'bg-adm text-white border-adm font-bold shadow-sm'
-                  : 'bg-white text-text-sec border-border-main font-medium'
+              whileTap={{ scale: 0.96 }}
+              className={`px-3 py-1.5 rounded-lg text-[11px] cursor-pointer transition-all duration-200 select-none whitespace-nowrap leading-none border shadow-sm ${isOn
+                ? 'bg-adm text-white border-adm font-bold'
+                : 'bg-white text-text-sec border-border-main font-semibold hover:border-adm hover:text-adm hover:bg-[#f8f9fc]'
                 }`}
               onClick={() => toggleFilter(key, opt)}
             >

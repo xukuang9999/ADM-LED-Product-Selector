@@ -42,30 +42,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      whileHover={{ y: -4, shadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)" }}
-      className={`group bg-white rounded-[10px] border-[1.5px] p-4 flex flex-col cursor-pointer transition-colors duration-200 ${isCompared ? 'border-compare ring-2 ring-compare/20 shadow-md' : 'border-border-lt hover:border-border-main shadow-sm'
+      whileHover={{ y: -6, shadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
+      className={`group bg-white rounded-xl border p-5 flex flex-col cursor-pointer transition-all duration-300 ${isCompared ? 'border-compare ring-4 ring-compare/10 shadow-lg' : 'border-border-main hover:border-adm shadow-sm hover:shadow-xl'
         }`}
       onClick={onClick}
-      tabIndex={0}
-      role="button"
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onClick();
-        }
-      }}
     >
-      <div className="flex items-start justify-between gap-2 mb-2.5">
-        <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-[3px] rounded leading-relaxed whitespace-nowrap ${pillClass}`}>
+      <div className="flex items-center justify-between gap-3 mb-4">
+        <span className={`text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-md shadow-sm ${pillClass}`}>
           {product.category}
         </span>
         <button
-          className={`w-[26px] h-[26px] rounded-md border-[1.5px] cursor-pointer grid place-items-center text-[13px] transition-all duration-150 shrink-0 ${isCompared
-            ? 'bg-compare text-white border-compare'
-            : 'bg-white border-border-main text-text-muted hover:border-compare hover:text-compare hover:bg-compare-lt'
+          className={`w-8 h-8 rounded-lg border cursor-pointer grid place-items-center text-[14px] transition-all duration-200 shrink-0 ${isCompared
+            ? 'bg-compare text-white border-compare shadow-inner'
+            : 'bg-[#f8f9fc] border-border-main text-text-muted hover:border-compare hover:text-compare hover:bg-white hover:shadow-md'
             }`}
           onClick={(e) => {
             e.stopPropagation();
@@ -73,52 +65,73 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           }}
           title={isCompared ? t('removeCmp') : t('addCmp')}
         >
-          {isCompared ? '✓' : '+'}
+          {isCompared ? (
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+          ) : (
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+            </svg>
+          )}
         </button>
       </div>
 
-      <h2 className="text-xs font-bold leading-tight text-text-main mb-0.5 font-mono tracking-wide m-0">
-        {product.sku}
-      </h2>
-      <div className="text-xs text-text-sec leading-relaxed mb-2.5">
-        {partDesc(product)}
-      </div>
-
-      <div className="flex flex-wrap gap-1 mb-2.5">
-        {product.voltage && <span className="text-[11px] font-semibold px-[7px] py-[2px] rounded whitespace-nowrap bg-[#dbeafe] text-[#1e40af]">{product.voltage}</span>}
-        {product.cct && <span className="text-[11px] font-semibold px-[7px] py-[2px] rounded whitespace-nowrap bg-[#fef3c7] text-[#92400e]">{product.cct}</span>}
-        {product.ipRating && <span className="text-[11px] font-semibold px-[7px] py-[2px] rounded whitespace-nowrap bg-[#d1fae5] text-[#065f46]">{product.ipRating}</span>}
-        {product.ledWidth && <span className="text-[11px] font-semibold px-[7px] py-[2px] rounded whitespace-nowrap bg-[#f1f5f9] text-[#475569]">{product.ledWidth}</span>}
-        {product.wattPerM ? (
-          <span className="text-[11px] font-semibold px-[7px] py-[2px] rounded whitespace-nowrap bg-[#fff7ed] text-[#c2410c]">{product.wattPerM} W/m</span>
-        ) : product.wattage ? (
-          <span className="text-[11px] font-semibold px-[7px] py-[2px] rounded whitespace-nowrap bg-[#fce7f3] text-[#9d174d]">{product.wattage}</span>
-        ) : null}
-        {product.lumens && <span className="text-[11px] font-semibold px-[7px] py-[2px] rounded whitespace-nowrap bg-[#e0e7ff] text-[#3730a3]">{product.lumens}</span>}
-        {product.cri && <span className="text-[11px] font-semibold px-[7px] py-[2px] rounded whitespace-nowrap bg-[#ccfbf1] text-[#115e59]">{product.cri}</span>}
-      </div>
-
-      {(product.beamAngle || product.dimensions) && (
-        <div className="text-[11px] text-text-muted mb-0.5">
-          {[product.beamAngle ? `Beam: ${product.beamAngle}` : '', product.dimensions].filter(Boolean).join(' · ')}
+      <div className="mb-4">
+        <h2 className="text-[14px] font-black leading-tight text-text-main mb-1.5 font-mono tracking-tight group-hover:text-adm transition-colors">
+          {product.sku}
+        </h2>
+        <div className="text-[13px] text-text-sec leading-snug font-medium line-clamp-2">
+          {partDesc(product)}
         </div>
-      )}
+      </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-2 pt-2.5 border-t border-border-lt mt-auto">
-        <span className={`inline-flex items-center gap-1 text-[10px] font-semibold ${inStock ? 'text-success' : 'text-danger'}`}>
-          <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${inStock ? 'bg-success' : 'bg-danger'}`}></span>
+      <div className="flex flex-wrap gap-1.5 mb-5 mt-auto">
+        {product.voltage && (
+          <div className="flex items-center bg-blue-50 text-blue-700 px-2 py-1 rounded-md border border-blue-100/50">
+            <span className="text-[10px] font-bold uppercase mr-1 opacity-50">V</span>
+            <span className="text-[11px] font-bold">{product.voltage}</span>
+          </div>
+        )}
+        {product.cct && (
+          <div className="flex items-center bg-amber-50 text-amber-700 px-2 py-1 rounded-md border border-amber-100/50">
+            <span className="text-[10px] font-bold uppercase mr-1 opacity-50">K</span>
+            <span className="text-[11px] font-bold">{product.cct}</span>
+          </div>
+        )}
+        {product.ipRating && (
+          <div className="flex items-center bg-emerald-50 text-emerald-700 px-2 py-1 rounded-md border border-emerald-100/50">
+            <span className="text-[10px] font-bold uppercase mr-1 opacity-50">IP</span>
+            <span className="text-[11px] font-bold">{product.ipRating}</span>
+          </div>
+        )}
+        {product.wattPerM && (
+          <div className="flex items-center bg-orange-50 text-orange-700 px-2 py-1 rounded-md border border-orange-100/50">
+            <span className="text-[10px] font-bold uppercase mr-1 opacity-50">W</span>
+            <span className="text-[11px] font-bold">{product.wattPerM}</span>
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center justify-between pt-4 border-t border-border-lt">
+        <div className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider ${inStock ? 'text-emerald-600' : 'text-rose-600'}`}>
+          <div className={`w-2 h-2 rounded-full ${inStock ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-rose-500'}`}></div>
           {inStock ? t('stocked') : t('outOfStock')}
-        </span>
-        <div className="flex flex-wrap gap-1.5 items-center">
+        </div>
+
+        <div className="flex gap-2">
           {product.datasheet && (
             <a
               href={product.datasheet}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-[10px] font-semibold text-text-sec no-underline px-2 py-1 border-[1.5px] border-border-main rounded-md transition-all duration-150 whitespace-nowrap hover:border-text-sec hover:text-text-main hover:bg-bg-main"
+              className="w-9 h-9 rounded-lg border border-border-main flex items-center justify-center text-text-sec hover:bg-[#f8f9fc] hover:border-text-main transition-all group/btn"
               onClick={(e) => e.stopPropagation()}
+              title={t('datasheet')}
             >
-              &#128196; {t('datasheet')}
+              <svg className="w-4 h-4 group-hover/btn:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
             </a>
           )}
           {product.url && (
@@ -126,10 +139,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               href={product.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 bg-adm text-white px-2.5 py-1 rounded-md text-[10px] font-bold no-underline transition-all duration-150 tracking-wide whitespace-nowrap hover:bg-adm-dark hover:shadow-[0_3px_10px_rgba(61,46,143,0.3)]"
+              className="px-4 h-9 bg-adm text-white rounded-lg flex items-center gap-2 text-[11px] font-black uppercase tracking-widest hover:bg-adm-dark hover:shadow-lg hover:shadow-adm/20 transition-all active:scale-95"
               onClick={(e) => e.stopPropagation()}
             >
-              &#128722;&ensp;{t('buyNow')}
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              {t('buyNow')}
             </a>
           )}
         </div>
